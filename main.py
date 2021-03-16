@@ -14,6 +14,17 @@ async def on_ready():
     print(f'{bot.user} запущен')
 
 @bot.command()
+async def getEvent(ctx, evid):
+    data = json.loads(codecs.open("database.json", encoding='utf-8').read())
+    for i in data['events']:
+        if i['id'] == int(evid):
+            id_ = i["id"]
+            name = i['name']
+            desc = i['desc']
+            link = i['link']
+            await ctx.send(f"Айди в базе: {id_}\nНазвание: {name}\nОписание: {desc}\nСсылка: {link}")
+
+@bot.command()
 async def hello(ctx):
     await ctx.send(f"Хай, {ctx.message.author.mention}")
 
@@ -54,4 +65,8 @@ async def on_reaction_add(reaction, user):
                 print(newData)
                 codecs.open("database.json", encoding='utf-8', mode='w').write(json.dumps(newData, sort_keys=True, indent=4))
             await i['message'].delete()
+
+
+
+
 bot.run(os.getenv('TOKEN'))
