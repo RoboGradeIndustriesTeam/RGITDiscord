@@ -12,6 +12,8 @@ addEventsConfirms = [] # {'user': userid, 'channel': channelid,  'event': event,
 @bot.event
 async def on_ready():
     print(f'{bot.user} запущен')
+    activity = discord.Game(name="Мы выиграем | !", type=4)
+    await bot.change_presence(status=discord.Status.idle, activity=activity)
 
 @bot.command()
 async def getEvent(ctx, evid):
